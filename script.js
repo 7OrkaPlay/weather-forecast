@@ -33,6 +33,22 @@ async function getWeather() {
 
     const weatherData = await weatherResponse.json();
     const current = weatherData.current;
+    
+    function getWeatherDescription(code) {
+    if (code === 0) {
+      return '☀️ Ясно';
+    } else if (code === 1 || code === 2 || code === 3) {
+      return '☁️ Облачно';
+    } else if (code === 61 || code === 63 || code === 65) {
+      return '🌧️ Дождь';
+    } else if (code === 71 || code === 73 || code === 75) {
+      return '❄️ Снег';
+    } else if (code === 95 || code === 96 || code === 99) {
+      return '⛈️ Гроза';
+    } else {
+      return 'Неизвестно';
+    }
+}
 
     result[0].textContent =
       `Температура: ${current.temperature_2m} °C`;
@@ -44,7 +60,7 @@ async function getWeather() {
       `Скорость ветра: ${current.wind_speed_10m} км/ч`;
 
     result[3].textContent =
-      `Погода на данный момент: ${current.weather_code}`;
+      `Погода на данный момент: ${getWeatherDescription(current.weather_code)}`;
 
 
     input.value = foundCity.name;
